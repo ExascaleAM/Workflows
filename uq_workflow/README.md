@@ -4,8 +4,6 @@ This directory contains the necessary files needed to run Stages 1 and 3 of the 
 
 Some of the scripts will need to have their file directory locations edited to point towards the users own locations. Since, they currently point towards the locations the ExaAM team used to run the UQ pipeline on Frontier.
 
-scp carson16@frontier.olcf.ornl.gov:/lustre/orion/world-shared/mat190/exaconstit/frontier_builds/exaconstit_install_hip.sh ./
-
 ## Running the workflows
 
 Stage 1 workflows on Frontier will require you first running the `Stage1/run_frontier_openfoam.sh` script. This will generate all the UQ grids, set-up all the problems to be run, and then run all the melt pool simulations to generate the necessary thermal histories required by ExaCA. After the AdditiveFOAM runs are finished, one can then run the `Stage1/run_frontier_exaca.sh` script which will generate all the process-aware built microstructures and then carve out the appropriate representative volume element microstructures for Stage 3.
