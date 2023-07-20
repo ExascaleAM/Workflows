@@ -1,0 +1,4 @@
+.DS_Store
+parameters.csv
+__pycache__
+cases/

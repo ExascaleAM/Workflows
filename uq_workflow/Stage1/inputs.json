@@ -1,0 +1,39 @@
+{
+    "openfoam":
+    {
+        "inputs":
+        [
+            {
+                "variable": "radius",
+                "bounds": [40e-6, 60e-6],
+                "file": "constant/heatSourceDict"
+            }
+        ]
+    },
+    "exaca":
+    {
+        "inputs":
+        [
+            {
+                "variable": "Density",
+                "bounds": [100, 1000],
+                "file": "inputs.json"
+            },
+            {
+                "variable": "StDev",
+                "bounds": [1, 10],
+                "file": "inputs.json",
+                "dependent":
+                {
+                    "variable": "MeanUndercooling",
+                    "scale": 3.0,
+                    "file": "inputs.json"
+                }
+            }
+        ]
+    },
+    "tasmanian":
+    {
+        "iLevel": 2
+    }
+}
