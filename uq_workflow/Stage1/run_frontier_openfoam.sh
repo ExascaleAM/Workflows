@@ -33,7 +33,7 @@ of_version=10
 source /lustre/orion/mat190/world-shared/colemanjs/OpenFOAM/Cray/OpenFOAM-$of_version/etc/bashrc
 
 # note : each user must build their own additiveFoam application
-INST_DIR=$baseDir/src/additiveFoam-$of_version
+INST_DIR=$baseDir/src/AdditiveFoam
 cd $INST_DIR
 wclean
 wmake
