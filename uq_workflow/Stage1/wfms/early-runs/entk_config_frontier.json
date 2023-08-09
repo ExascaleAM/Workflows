@@ -4,11 +4,10 @@
     },
     "resource_description": {
         "resource"     : "ornl.frontier",
-        "project"      : "MAT190",
-        "queue"        : "batch",
-        "walltime"     : 60,
-        "cpus"         : 56,
-        "gpus"         : 8,
+        "project"      : "CSC449",
+        "walltime"     : 240,
+        "cpus"         : 640,
+        "gpus"         : 80,
         "access_schema": "local"
     }
 }
