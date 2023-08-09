@@ -1,0 +1,14 @@
+{
+    "mongodb": {
+        "url"          : "mongodb://***:***@apps.marble.ccs.ornl.gov:32020/"
+    },
+    "resource_description": {
+        "resource"     : "ornl.summit_jsrun",
+        "project"      : "CSC449",
+        "queue"        : "debug",
+        "walltime"     : 120,
+        "cpus"         : 420,
+        "gpus"         : 60,
+        "access_schema": "local"
+    }
+}

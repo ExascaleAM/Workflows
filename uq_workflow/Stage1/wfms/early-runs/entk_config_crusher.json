@@ -1,0 +1,13 @@
+{
+    "mongodb": {
+        "url"          : "mongodb://***:***@apps.marble.ccs.ornl.gov:32020/"
+    },
+    "resource_description": {
+        "resource"     : "ornl.crusher",
+        "project"      : "CSC449_crusher",
+        "walltime"     : 240,
+        "cpus"         : 640,
+        "gpus"         : 80,
+        "access_schema": "local"
+    }
+}
