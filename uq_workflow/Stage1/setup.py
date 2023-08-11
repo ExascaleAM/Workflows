@@ -6,7 +6,7 @@ import pandas as pd
 import os
 import json
 from parsers.exaca import create_cases as setup_exaca
-from parsers.openfoam import create_cases as setup_openfoam
+from parsers.additivefoam import create_cases as setup_additivefoam
 
 basePath = os.getcwd()
 
@@ -22,26 +22,26 @@ def readInputs(filename="inputs.json"):
   return inputs
 
 # data manager to track case id and input parameters
-# case_id = 'case_openfoam'.'case_exaca'
+# case_id = 'case_additivefoam'.'case_exaca'
 class Data:
-    def __init__(self, openfoam, exaca):
-        self.openfoam = openfoam
+    def __init__(self, additivefoam, exaca):
+        self.additivefoam = additivefoam
         self.exaca = exaca
         self.templatePath = os.path.join(basePath, "templates")
         self.casePath = os.path.join(basePath, "cases")
         self.cases = []
         self.parameters = []
-        self.nInputs = len(self.openfoam["inputs"]) + len(self.exaca["inputs"])
+        self.nInputs = len(self.additivefoam["inputs"]) + len(self.exaca["inputs"])
         self.setIndices()
 
     def setIndices(self) :
-        # list indices: 0 = openfoam, 1 = exaca
+        # list indices: 0 = additivefoam, 1 = exaca
         self.indices = 2*[[]]
-        self.indices[0] = np.arange(0, len(self.openfoam["inputs"]), 1)
-        self.indices[1] = np.arange(len(self.openfoam["inputs"]), self.nInputs, 1)
+        self.indices[0] = np.arange(0, len(self.additivefoam["inputs"]), 1)
+        self.indices[1] = np.arange(len(self.additivefoam["inputs"]), self.nInputs, 1)
 
     def setPoints(self, points):
-        # unique sets of inputs: 0 = openfoam, 1 = exaca
+        # unique sets of inputs: 0 = additivefoam, 1 = exaca
         self.inputs  = 2*[[]]
         self.inputs[0] = np.unique(points[:, self.indices[0]], axis=0)
         self.inputs[1] = np.unique(points[:, self.indices[1]], axis=0)
@@ -69,7 +69,7 @@ class Data:
             self.parameters.append(p.tolist())
 
     def to_csv(self, filename):
-        v0 = [x["variable"] for x in self.openfoam["inputs"]]
+        v0 = [x["variable"] for x in self.additivefoam["inputs"]]
         v1 = [x["variable"] for x in self.exaca["inputs"]]
         variables = v0 + v1
         df = pd.DataFrame(np.round(self.parameters, 8), columns=variables)
@@ -79,12 +79,12 @@ class Data:
 #-----------------------------------------------------------------------------#
 # read inputs and initialize data manager
 inputs    = readInputs()
-openfoam  = inputs["openfoam"]
+additivefoam  = inputs["additivefoam"]
 exaca     = inputs["exaca"]
 tasmanian = inputs["tasmanian"]
 
 # create data manager
-data = Data(openfoam, exaca)
+data = Data(additivefoam, exaca)
 
 # create a uniform grid for initial surrogate construction
 nInputs      = data.nInputs
@@ -101,7 +101,7 @@ grid = Tasmanian.makeLocalPolynomialGrid(
 
 # set domain transform using data bounds
 bounds = np.append(
-    np.array([x["bounds"] for x in openfoam["inputs"]]),
+    np.array([x["bounds"] for x in additivefoam["inputs"]]),
     np.array([x["bounds"] for x in exaca["inputs"]]),
     axis=0)
 
@@ -114,4 +114,4 @@ data.to_csv("parameters.csv")
 
 # create case directories
 setup_exaca(data)
-setup_openfoam(data)
+setup_additivefoam(data)

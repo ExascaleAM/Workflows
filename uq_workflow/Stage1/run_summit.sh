@@ -13,11 +13,11 @@ baseDir="$PWD"
 export OMP_NUM_THREADS=1
 
 #------------------------------------------------------------------------------#
-# STAGE 1 : OPENFOAM
+# STAGE 1 : ADDITIVEFOAM
 source /gpfs/alpine/world-shared/mat190/coleman/OpenFOAM/summit/OpenFOAM-8/etc/bashrc
 
 foamDictionary -entry numberOfSubdomains -set 42 templates/openfoam/system/decomposeParDict
-RUN_openfoam="jsrun -n 42 additiveFoam -parallel"
+RUN_additivefoam="jsrun -n 42 additiveFoam -parallel"
 
 for d in $baseDir/cases/openfoam/*
 do
@@ -29,7 +29,7 @@ done
 
 wait
 
-# execute openfoam
+# execute additivefoam
 for d in $baseDir/cases/openfoam/*
 do
     #run odd layer
@@ -38,7 +38,7 @@ do
 
         decomposePar > log.decomposePar 2>&1
         foamDictionary -entry pathFile -set scanPath_odd constant/heatSourceDict
-        $RUN_openfoam > log.additiveFoam 2>&1
+        $RUN_additivefoam > log.additiveFoam 2>&1
 
         echo "x,y,z,tm,ts,cr" > $d/odd.csv
         cat exaca* >> $d/odd.csv
@@ -52,7 +52,7 @@ do
 
         decomposePar > log.decomposePar 2>&1
         foamDictionary -entry pathFile -set scanPath_odd constant/heatSourceDict
-        $RUN_openfoam > log.additiveFoam 2>&1
+        $RUN_additivefoam > log.additiveFoam 2>&1
 
         echo "x,y,z,tm,ts,cr" > $d/even.csv
         cat exaca* >> $d/even.csv

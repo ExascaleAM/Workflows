@@ -29,8 +29,8 @@ class DemoWF(BaseWF):
 
         stages = []
 
-        if not self.stage_group or self.stage_group == 'openfoam':
-            stages.extend(self._stages_openfoam())
+        if not self.stage_group or self.stage_group == 'additivefoam':
+            stages.extend(self._stages_additivefoam())
 
         if not self.stage_group or self.stage_group == 'exaca':
             stages.extend(self._stages_exaca())
@@ -39,23 +39,23 @@ class DemoWF(BaseWF):
 
     # --------------------------------------------------------------------------
     #
-    def _stages_openfoam(self):
+    def _stages_additivefoam(self):
 
         stages = [re.Stage(), re.Stage()]
 
-        # OpenFOAM preparation steps
+        # AdditiveFOAM preparation steps
 
         case_types = ['odd', 'even']
         num_subdomains = 224  # 4 nodes (with blocked 8 cores per node)
 
-        for case in glob.glob('%s/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
                 stages[0].add_tasks(re.Task({
                     'executable': ':',
                     'pre_exec': [
-                        # required for OpenFOAM bashrc-script
+                        # required for AdditiveFOAM bashrc-script
                         'export USER=$SLURM_JOB_USER',
                         'source $WORLDWORK/mat190/colemanjs/OpenFOAM/Cray/'
                         'OpenFOAM-10/etc/bashrc',
@@ -69,7 +69,7 @@ class DemoWF(BaseWF):
                     ]
                 }))
 
-        # OpenFOAM
+        # AdditiveFOAM
 
         for case in glob.glob('%s/openfoam/*' % self.cases_dir):
             for case_type in case_types:
@@ -79,7 +79,7 @@ class DemoWF(BaseWF):
                     'executable': 'additiveFoam',
                     'arguments': ['-parallel'],
                     'pre_exec': [
-                        # required for OpenFOAM bashrc-script
+                        # required for AdditiveFOAM bashrc-script
                         'export USER=$SLURM_JOB_USER',
                         'source $WORLDWORK/mat190/colemanjs/OpenFOAM/Cray/'
                         'OpenFOAM-10/etc/bashrc',

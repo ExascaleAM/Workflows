@@ -1,12 +1,12 @@
 # ExaAM Uncertainty Quantification Workflow
 
-This directory contains the necessary files needed to run Stages 1 and 3 of the ExaAM UQ pipeline. In order to run each stage, users will need to build `AdditiveFOAM`, `ExaCA`, and `ExaConstit`. Each of their repos contain information regarding how to build each one. We do include for convenience a set of build scripts for ExaConstit and its TPLs for Frontier in the `Stage3/exaconstit_build` directory. For `AdditiveFOAM`, the Stage 1 repo does contains it as a git submodule so the user just needs to have a valid `OpenFOAM-10` build from which to point the `run_frontier_openfoam.sh` script at.
+This directory contains the necessary files needed to run Stages 1 and 3 of the ExaAM UQ pipeline. In order to run each stage, users will need to build `AdditiveFOAM`, `ExaCA`, and `ExaConstit`. Each of their repos contain information regarding how to build each one. We do include for convenience a set of build scripts for ExaConstit and its TPLs for Frontier in the `Stage3/exaconstit_build` directory. For `AdditiveFOAM`, the Stage 1 repo does contains it as a git submodule so the user just needs to have a valid `OpenFOAM-10` build from which to point the `run_frontier_additivefoam.sh` script at.
 
 Some of the scripts will need to have their file directory locations edited to point towards the users own locations. Since, they currently point towards the locations the ExaAM team used to run the UQ pipeline on Frontier.
 
 ## Running the workflows
 
-Stage 1 workflows* on Frontier will require you first running the `Stage1/run_frontier_openfoam.sh` script. This will generate all the UQ grids, set-up all the problems to be run, and then run all the melt pool simulations to generate the necessary thermal histories required by ExaCA. After the AdditiveFOAM runs are finished, one can then run the `Stage1/run_frontier_exaca.sh` script which will generate all the process-aware built microstructures and then carve out the appropriate representative volume element microstructures for Stage 3.
+Stage 1 workflows* on Frontier will require you first running the `Stage1/run_frontier_additivefoam.sh` script. This will generate all the UQ grids, set-up all the problems to be run, and then run all the melt pool simulations to generate the necessary thermal histories required by ExaCA. After the AdditiveFOAM runs are finished, one can then run the `Stage1/run_frontier_exaca.sh` script which will generate all the process-aware built microstructures and then carve out the appropriate representative volume element microstructures for Stage 3.
 
 **(*)** Alternative Stage 1 workflow using RADICAL-EnTK is available in the [Stage1/wfms](Stage1/wfms) directory.
 

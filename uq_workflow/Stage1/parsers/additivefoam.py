@@ -22,11 +22,11 @@ def set_value(filename, keyword, value, cmpt) :
             f.write(str(line))
 
 #------------------------------------------------------------------------------#
-# create openfoam case directories
+# create additivefoam case directories
 def create_cases(data) :
     for case in np.unique([case.split(".")[0] for case in data.cases]) :
-        source = os.path.join(data.templatePath, "openfoam")
-        target = os.path.join(data.casePath, "openfoam", case)
+        source = os.path.join(data.templatePath, "additivefoam")
+        target = os.path.join(data.casePath, "additivefoam", case)
 
         copytree(source, target, ignore=ignore_patterns("polyMesh", "preMesh"))
 
@@ -35,17 +35,17 @@ def create_cases(data) :
             os.path.join(target, "constant", "polyMesh"))
 
         parameters = np.array(data.inputs[0][int(case)])
-        variables = [x["variable"] for x in data.openfoam["inputs"]]
+        variables = [x["variable"] for x in data.additivefoam["inputs"]]
 
         for i, x in enumerate(parameters) :
             # can be scalar or vector, so a cmpt must be passed to set_value
             try :
-                cmpt = data.openfoam["inputs"][i]["component"]
+                cmpt = data.additivefoam["inputs"][i]["component"]
             except :
                 cmpt = "x"
 
             set_value(
-                os.path.join(target, data.openfoam["inputs"][i]["file"]),
+                os.path.join(target, data.additivefoam["inputs"][i]["file"]),
                 variables[i],
                 x,
                 cmpt)
