@@ -71,7 +71,7 @@ class DemoWF(BaseWF):
 
         # AdditiveFOAM
 
-        for case in glob.glob('%s/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 

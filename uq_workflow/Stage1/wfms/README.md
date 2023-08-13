@@ -89,8 +89,8 @@ nohup python entk_app.py -c entk_config_frontier.json > OUTPUT 2>&1 </dev/null &
 #### 2.a. Run AdditiveFOAM only
 
 ```shell 
-nohup python entk_app.py -c entk_config_frontier_openfoam.json \
-                         -s openfoam \
+nohup python entk_app.py -c entk_config_frontier_additivefoam.json \
+                         -s additivefoam \
                          > OUTPUT 2>&1 </dev/null &
 ```
 

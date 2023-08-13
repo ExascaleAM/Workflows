@@ -47,7 +47,7 @@ class DemoWF(BaseWF):
         num_subdomains = 60
 
         tag_idx = 0
-        for case in glob.glob('%s/cases/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/cases/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
@@ -79,7 +79,7 @@ class DemoWF(BaseWF):
         # AdditiveFOAM
 
         tag_idx = 0
-        for case in glob.glob('%s/cases/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/cases/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
@@ -171,7 +171,7 @@ class DemoWF(BaseWF):
         case_types     = ['odd', 'even']
         num_subdomains = 42
 
-        for case in glob.glob('%s/cases/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/cases/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
@@ -194,7 +194,7 @@ class DemoWF(BaseWF):
 
         # AdditiveFOAM
 
-        for case in glob.glob('%s/cases/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/cases/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
