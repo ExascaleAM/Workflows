@@ -91,8 +91,8 @@ def create_cases(data) :
             "GrainOrientationFile",
             os.path.join(source, "GrainOrientationVectors_1e6.csv"), True, True)
 
-        # specify the paths to the openfoam temperature data
+        # specify the paths to the additivefoam temperature data
         set_temperature(
            os.path.join(target, "inputs.json"),
-           os.path.join(data.casePath, "openfoam", case.split(".")[0]))
+           os.path.join(data.casePath, "additivefoam", case.split(".")[0]))
 #------------------------------------------------------------------------------#

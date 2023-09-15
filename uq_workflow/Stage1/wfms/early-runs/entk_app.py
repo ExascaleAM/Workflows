@@ -41,13 +41,13 @@ class DemoWF(BaseWF):
 
         stages = [re.Stage(), re.Stage(), re.Stage(), re.Stage()]
 
-        # OpenFOAM preparation steps
+        # AdditiveFOAM preparation steps
 
         case_types     = ['odd', 'even']
         num_subdomains = 60
 
         tag_idx = 0
-        for case in glob.glob('%s/cases/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/cases/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
@@ -59,7 +59,7 @@ class DemoWF(BaseWF):
                         'export MPI_ARCH_FLAGS="-DMPICH_SKIP_MPICXX"',
                         'export MPI_ARCH_INC="-I$MPI_ROOT/include"',
                         'export MPI_ARCH_LIBS="-L$MPI_ROOT/lib -lmpich -lrt"',
-                        # required for OpenFOAM bashrc-script
+                        # required for AdditiveFOAM bashrc-script
                         'export USER=$SLURM_JOB_USER',
                         'source /gpfs/alpine/world-shared/mat190/coleman/'
                         'OpenFOAM/crusher/OpenFOAM-8/etc/bashrc',
@@ -76,10 +76,10 @@ class DemoWF(BaseWF):
                 }))
                 tag_idx += 1
 
-        # OpenFOAM
+        # AdditiveFOAM
 
         tag_idx = 0
-        for case in glob.glob('%s/cases/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/cases/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
@@ -92,7 +92,7 @@ class DemoWF(BaseWF):
                         'export MPI_ARCH_FLAGS="-DMPICH_SKIP_MPICXX"',
                         'export MPI_ARCH_INC="-I$MPI_ROOT/include"',
                         'export MPI_ARCH_LIBS="-L$MPI_ROOT/lib -lmpich -lrt"',
-                        # required for OpenFOAM bashrc-script
+                        # required for AdditiveFOAM bashrc-script
                         'export USER=$SLURM_JOB_USER',
                         'source /gpfs/alpine/world-shared/mat190/coleman/'
                         'OpenFOAM/crusher/OpenFOAM-8/etc/bashrc',
@@ -166,19 +166,19 @@ class DemoWF(BaseWF):
 
         stages = [re.Stage(), re.Stage(), re.Stage()]
 
-        # OpenFOAM preparation steps
+        # AdditiveFOAM preparation steps
 
         case_types     = ['odd', 'even']
         num_subdomains = 42
 
-        for case in glob.glob('%s/cases/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/cases/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
                 stages[0].add_tasks(re.Task({
                     'executable' : ':',
                     'pre_exec'   : [
-                        # required for OpenFOAM bashrc-script
+                        # required for AdditiveFOAM bashrc-script
                         'export USER=$LSFUSER',
                         'source /gpfs/alpine/world-shared/mat190/coleman/'
                         'OpenFOAM/summit/OpenFOAM-8/etc/bashrc',
@@ -192,9 +192,9 @@ class DemoWF(BaseWF):
                     ]
                 }))
 
-        # OpenFOAM
+        # AdditiveFOAM
 
-        for case in glob.glob('%s/cases/openfoam/*' % self.cases_dir):
+        for case in glob.glob('%s/cases/additivefoam/*' % self.cases_dir):
             for case_type in case_types:
                 sub_case = '%s/%s' % (case, case_type)
 
@@ -202,7 +202,7 @@ class DemoWF(BaseWF):
                     'executable' : 'additiveFoam',
                     'arguments'  : ['-parallel'],
                     'pre_exec'   : [
-                        # required for OpenFOAM bashrc-script
+                        # required for AdditiveFOAM bashrc-script
                         'export USER=$LSFUSER',
                         'source /gpfs/alpine/world-shared/mat190/coleman/'
                         'OpenFOAM/summit/OpenFOAM-8/etc/bashrc',

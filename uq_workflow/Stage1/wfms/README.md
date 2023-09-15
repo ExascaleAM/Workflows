@@ -1,4 +1,4 @@
-# RADICAL-EnTK-based application for OpenFOAM and ExaCA workflows
+# RADICAL-EnTK-based application for AdditiveFOAM and ExaCA workflows
 
 Original code is located here: https://code.ornl.gov/matitov/exaam-challenge-problem-entk.
 Provided solution is based on the RADICAL-EnTK tool from the 
@@ -60,7 +60,7 @@ cat > ~/.radical/pilot/configs/resource_ornl.json <<EOF
 EOF
 ```
 
-#### 1.2. Setup environment for OpenFOAM
+#### 1.2. Setup environment for AdditiveFOAM
 
 ```shell
 source $WORLDWORK/mat190/colemanjs/OpenFOAM/Cray/OpenFOAM-10/etc/bashrc
@@ -73,7 +73,7 @@ wmake
 cd $WORK_DIR
 ```
 
-### 1.3. Generate OpenFOAM and ExaCA cases
+### 1.3. Generate AdditiveFOAM and ExaCA cases
 
 ```shell
 python setup.py
@@ -86,11 +86,11 @@ Run EnTK app in the background and collect output into `OUTPUT` file
 nohup python entk_app.py -c entk_config_frontier.json > OUTPUT 2>&1 </dev/null &
 ```
 
-#### 2.a. Run OpenFOAM only
+#### 2.a. Run AdditiveFOAM only
 
 ```shell 
-nohup python entk_app.py -c entk_config_frontier_openfoam.json \
-                         -s openfoam \
+nohup python entk_app.py -c entk_config_frontier_additivefoam.json \
+                         -s additivefoam \
                          > OUTPUT 2>&1 </dev/null &
 ```
 
