@@ -1,3 +1,0 @@
-[submodule "uq_workflow/Stage1/src/AdditiveFOAM"]
-	path = uq_workflow/Stage1/src/AdditiveFOAM
-	url = https://github.com/ORNL/AdditiveFOAM.git
