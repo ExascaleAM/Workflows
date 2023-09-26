@@ -1,0 +1,25 @@
+ARG TAG=20.04
+FROM ecpe4s/ubuntu${TAG}
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y \
+       git g++ clang llvm vim emacs wget sudo curl cmake make ninja-build clang-format zstd libhwloc-dev libomp-dev gnupg2 && \
+    apt-get purge --autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -G sudo -u 1001 exaam
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER exaam
+ENV CCACHE_MAXSIZE=250M
+WORKDIR /home/exaam
+
+# Needs spack develop for additivefoam for now
+RUN git clone --depth=100 https://github.com/spack/spack.git ~/spack
+
+# Install ExaAM packages (TODO: add exaconstit)
+RUN cd ~/spack && \
+    . share/spack/setup-env.sh && \
+    spack install additivefoam && \
+    spack install exaca
