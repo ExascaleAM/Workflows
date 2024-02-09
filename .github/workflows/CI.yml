@@ -18,6 +18,8 @@ jobs:
           - {dockerfile: 'ubuntu', tag: 'latest', build_args: 'TAG=latest'}
           - {dockerfile: 'ubuntu', tag: 'dev', build_args: 'TAG=dev'}
     runs-on: ubuntu-latest
+    env:
+      docker-tag: ghcr.io/exascaleam/workflows/${{ matrix.config.dockerfile }}:${{ matrix.config.tag }}
     steps:
       - name: Checkout out code
         uses: actions/checkout@v3
@@ -29,11 +31,26 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and Push Docker images for Github Container Registry
-        uses: docker/build-push-action@v3
+      - name: Build new image and load it into Docker to test
+        uses: docker/build-push-action@v4
         with:
-          tags: ghcr.io/exascaleam/workflows/${{ matrix.config.dockerfile }}:${{ matrix.config.tag }}
+          tags: ${{ env.docker-tag }}
           file: docker/${{ matrix.config.dockerfile }}
           build-args: ${{ matrix.config.build_args }}
           pull: true
-          push: ${{ github.event_name == 'push' ||  github.event_name == 'schedule' }}
+          push: false
+          load: true     
+      - name: Test updated image
+        run: |
+          docker run -t --rm -v ${{ github.workspace }}/exascaleam:/exascaleam ${{ env.docker-tag }} \
+            sh -c \
+            'spack load additivefoam && \
+             spack load exaca'
+      - name: Push Docker images for Github Container Registry
+        uses: docker/build-push-action@v3
+        if: ${{ github.event_name == 'push' ||  github.event_name == 'schedule' }}
+        with:
+          tags: ${{ env.docker-tag }}
+          file: docker/${{ matrix.config.dockerfile }}
+          build-args: ${{ matrix.config.build_args }}
+          push: true
