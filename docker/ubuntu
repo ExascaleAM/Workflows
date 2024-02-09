@@ -40,7 +40,6 @@ RUN find -L /opt/views/view/* -type f -exec readlink -f '{}' \; | \
 RUN cd /opt/spack-environment && \
     spack env activate --sh -d . > activate.sh
 
-
 # Bare OS image to run the installed executables
 FROM ubuntu:22.04
 
@@ -61,3 +60,8 @@ RUN { \
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/bin/bash" ]
+
+RUN useradd -m -G sudo -u 1001 exaam
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER exaam
+WORKDIR /home/exaam
