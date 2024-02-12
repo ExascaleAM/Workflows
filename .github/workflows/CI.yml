@@ -48,7 +48,8 @@ jobs:
         run: |
           docker run -t --rm -v ${{ github.workspace }}/exascaleam:/exascaleam ${{ env.docker-tag }} \
             sh -c \
-            'spack load additivefoam && \
+            'sudo . /opt/spack/share/spack/setup-env.sh && \
+             spack load additivefoam && \
              spack load exaca'
       - name: Push Docker images for Github Container Registry
         uses: docker/build-push-action@v3
