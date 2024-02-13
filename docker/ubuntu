@@ -51,7 +51,4 @@ RUN { \
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/bin/bash" ]
 
-RUN useradd -m -G sudo -u 1001 exaam
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-USER exaam
 WORKDIR /home/exaam
